@@ -10,21 +10,18 @@ library(shiny)
 shinyUI(fluidPage(
 
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("Share Price Prediction"),
 
-  # Sidebar with a slider input for number of bins
+  # Sidebar with a text input for name of share (Examples provided)
   sidebarLayout(
     sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      textInput('share', 'Share Symbol', 'GOOG'),
+      submitButton('Submit')
     ),
 
-    # Show a plot of the generated distribution
+    # Show a line chart plot of the share price
     mainPanel(
-      plotOutput("distPlot")
+      plotOutput("distLineChartPlot")
     )
   )
 ))
