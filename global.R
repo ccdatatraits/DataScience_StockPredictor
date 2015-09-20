@@ -1,7 +1,7 @@
 library(shiny)
 library(FinCal)
 
-noData <- data.frame(date = c('2013-01-02', '2013-01-03'), close = c(0,0))
+noData <- data.frame(date = c(Sys.Date() - 35, Sys.Date()), close = c(0,0))
 
 sharePrice <- function(symbol) {
   tryCatch(get.ohlc.google(symbol), 
