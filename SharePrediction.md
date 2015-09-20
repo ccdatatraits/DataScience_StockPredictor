@@ -730,7 +730,7 @@ Prediction Modeling
 See previous slide for columns that we are referring here
 
 - We use the **date** (changed to numeric value) as the predictor
-- We use the **close** as our predicted value column
+- We use the **close** column as our predicted value column
 - Using **stats::lm** we fit a linear model from our data downloaded from Google Finance
 - Using the above model, we predict a value for 365 days from today
 - If the predicted value is less than zero, we do not show negative value, instead we show an appropriate message
