@@ -1,0 +1,49 @@
+Share Price Predictor
+========================================================
+author: Sohail Munir Khan
+date: September 20th, 2015
+font-import: http://fonts.googleapis.com/css?family=Risque
+font-family: 'Risque'
+class: illustration
+transition: rotate
+
+Share Price Predictor
+========================================================
+
+Location: https://datatraits.shinyapps.io/ShinyCourseProject
+
+- Predicts share price value for any NYSE symbol (Well known Stocks: http://www.nasdaq.com/markets/most-active.aspx)
+- Reactive Shiny Application
+- Error Checking, Intuitive, Informative, 1 Year Forward Predicted Price
+- Shows Historical Share Price in a nice Graphical User Interface
+- Shows Current Price. If Predicted value is less than zero (try Symbol: LC), prints appropriate message
+
+How Stock Price is Fetched
+========================================================
+
+- R Package **FinCal** provides method get.ohlc.google and get.ohlc.yahoo to download data for any publicly listed company
+- Here we are using **get.ohlc.google** to download stock prices from Google Finance
+- It provides historical data since 1st January 2013 till today (`r Sys.Date()`)
+- We then use another method called **lineChart** to plot our graph every time user inputs a valid share symbol. It shows closing price (*close*) on the lineChart
+
+How Share Price Data Looks Like
+========================================================
+
+- Showing Collected Data for Google (Share Symbol: GOOG)
+```{r, echo=FALSE}
+library(FinCal)
+```
+```{r}
+get.ohlc.google('GOOG')
+```
+
+Prediction Modeling
+========================================================
+
+See previous slide for columns that we are referring here
+
+- We use the **date** (changed to numeric value) as the predictor
+- We use the **close** as our predicted value column
+- Using **stats::lm** we fit a linear model from our data downloaded from Google Finance
+- Using the above model, we predict a value for 365 days from today
+- If the predicted value is less than zero, we do not show negative value, instead we show an appropriate message
