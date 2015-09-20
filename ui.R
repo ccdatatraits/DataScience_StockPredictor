@@ -15,11 +15,11 @@ shinyUI(fluidPage(
       submitButton('Submit')
     ),
     
-    # Show a line chart plot of the share price
+    # Main Panel consisting of all outputs
     mainPanel(
-      h3('One Year Results of prediction'),
-      h4('Share'),
+      h4('Input'),
       verbatimTextOutput("inputValue"),
+      # Show a line chart plot of the share price
       plotOutput("distLineChartPlot"),
       h4(verbatimTextOutput("prediction"))
     )

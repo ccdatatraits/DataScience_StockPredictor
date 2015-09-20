@@ -23,8 +23,10 @@ shinyServer(function(input, output) {
         oneYearFutureDate <- Sys.Date() + 365
         oneYearFutureNumericDate <- as.numeric(oneYearFutureDate)
         predicted <- predict(fit, data.frame(ndate = oneYearFutureNumericDate))
+        output <- if (predicted < 0) 'Share Price value less than zero'
+                  else paste0('Predicted Price will be ',round(predicted, 2))
         paste0('Current Price: ', data['1','close'], 
-              '.  Predicted Price on ', oneYearFutureDate, ': ', round(predicted, 2))
+              '.  ', oneYearFutureDate, ': ', output)
       }
     })
   
