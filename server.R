@@ -1,19 +1,32 @@
 
-# This is the server logic for a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
 
-library(shiny)
-library(FinCal)
+# This is the server logic for a Shiny web application
+#  for Share Price Predictor Application
+# 
 
 shinyServer(function(input, output) {
-
+  #reactive(input$Submit)
+  output$inputValue <- reactive(input$share)
+  result <- reactive(sharePrice(input$share))
   output$distLineChartPlot <- renderPlot({
-    
-    lineChart(get.ohlc.google(input$share))
-
+    lineChart(result())
   })
-
+  output$prediction <-
+    reactive({
+      data <- result()
+      if (identical(noData, data)) {
+        'Share Symbol ERROR: Invalid: Try GOOG,AAPL,MRIN or any other Symbol from NYSE'
+      }
+      else {
+        data$ndate <- as.numeric(as.Date(data$date))
+        fit <- lm(close ~ ndate, data)
+        oneYearFutureDate <- Sys.Date() + 365
+        oneYearFutureNumericDate <- as.numeric(oneYearFutureDate)
+        predicted <- predict(fit, data.frame(ndate = oneYearFutureNumericDate))
+        paste0('Current Price: ', data['1','close'], 
+              '.  Predicted Price on ', oneYearFutureDate, ': ', round(predicted, 2))
+      }
+    })
+  
+  
 })
